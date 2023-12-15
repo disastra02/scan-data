@@ -4,11 +4,17 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <a href="#" class="back-page"><i class="fa-solid fa-arrow-left"></i></a> &nbsp;&nbsp;&nbsp;
+            <div class="card mb-4 border-0">
+                <div class="card-body p-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button class="btn btn-light back-page bg-transparent border-0"><i class="fa-solid fa-arrow-left"></i></button>
                         <h5 class="fw-bold mb-0">Data Timbangan</h5>
+                        <button class="btn btn-light bg-transparent border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Reset Formulir</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -17,22 +23,22 @@
         <div class="col-12">
             <form id="formTimbangan" action="{{ route('timbangan.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="card mb-4">
-                    <div class="card-body">
+                <div class="card mb-4 border-0">
+                    <div class="card-body p-2">
                         <div class="mb-3">
                             <label for="nomorKendaraan" class="form-label">Nomor Kendaraan <span class="text-danger">*</span></label>
                             <input type="text" name="nomor_kendaraan" class="form-control" id="nomorKendaraan" placeholder="Masukkan Nomor Kendaraan" required>
                         </div>
                         
                         <div id="sectionSuratJalan">
-                            <div class="card mb-3">
-                                <div class="card-header">
+                            <div class="card mb-3 mb-4 bg-light border-0">
+                                <div class="card-header border-0 bg-secondary-subtle">
                                     <div class="row align-items-center">
                                         <div class="col-6">
                                             Surat Jalan
                                         </div>
                                         <div class="col-6 text-end">
-                                            
+                                            <button class="btn btn-secondary btn-add-surat" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" type="button"><i class="fa-solid fa-plus"></i>&nbsp; Tambah Surat</button>
                                         </div>
                                     </div>
                                 </div>
@@ -64,14 +70,14 @@
                                 </div>
                             </div>
                         </div>
-    
-                        <div class="d-flex flex-column mb-3">
-                            <button class="btn btn-secondary btn-add-surat" type="button"><i class="fa-solid fa-plus"></i> &nbsp; Tambah No Surat Jalan </button>
-                        </div>
-                        <hr>
-                        <div class="d-flex flex-column">
-                            <button class="btn btn-primary btn-submit-data" type="button"><i class="fa-solid fa-check"></i> &nbsp; Simpan Data </button>
-                            <button id="submitData" type="submit" class="d-none"></button>
+                        <div class="row justify-content-end">
+                            <div class="col-4 d-flex flex-column">
+                                <button class="btn btn-primary back-page btn-light bg-danger-subtle text-danger border-danger" type="button"><i class="fa-solid fa-xmark"></i> &nbsp; Batal </button>
+                            </div>
+                            <div class="col-4 d-flex flex-column">
+                                <button class="btn btn-primary btn-submit-data" type="button"><i class="fa-solid fa-check"></i> &nbsp; Simpan </button>
+                                <button id="submitData" type="submit" class="d-none"></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -122,12 +128,12 @@
 
                 Swal.fire({
                     title: "Apakah anda yakin ?",
-                    text: `Data akan dihapus!`,
+                    text: `Data barang akan dihapus !`,
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Simpan",
+                    confirmButtonText: "Hapus",
                     cancelButtonText: "Batal",
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -147,17 +153,20 @@
 
                 Swal.fire({
                     title: "Apakah anda yakin ?",
-                    text: `Data akan dihapus!`,
+                    text: `Data surat jalan akan dihapus !`,
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Simpan",
+                    confirmButtonText: "Hapus",
                     cancelButtonText: "Batal",
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Remove element
                         $(`#cardSuratJalan${id}`).remove();
+
+                        // Show button tambah
+                        $('.btn-add-surat').last().show();
 
                         if (id == idStreamAktif) {
                             stopScanQr();
@@ -170,7 +179,7 @@
             $('.btn-submit-data').on('click', function() {
                 Swal.fire({
                     title: "Apakah anda yakin ?",
-                    text: `Data akan disimpan!`,
+                    text: `Data akan disimpan !`,
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
@@ -222,7 +231,7 @@
                                     let valueQr = `${idStream}-${resultQr}`;
 
                                     if ($.inArray(valueQr, arrayDataTimbangan) != -1) {
-                                        alertCustom("error", "Terjadi Kesalahan !", "Data QR Code sudah digunakan.");
+                                        alertCustom("error", "Terjadi Kesalahan !", "Data sudah digunakan.");
                                     } else {
                                         arrayDataTimbangan.push(valueQr);
     
@@ -236,7 +245,7 @@
                                                             <input type="hidden" name="berat_barang[]" value="${beratBarangId}">
                                                         </td>
                                                         <td class="text-center">
-                                                            <button type="button" class="btn btn-danger btn-remove-qr" data-id="${valueQr}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i class="fa-solid fa-trash"></i></button>
+                                                            <button type="button" class="btn btn-danger bg-danger-subtle btn-remove-qr border-danger" data-id="${valueQr}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i class="text-danger fa-solid fa-trash"></i></button>
                                                             <input type="hidden" name="nomer_barcode[]" value="${idStream}">
                                                         </td>
                                                     </tr>`;
@@ -290,18 +299,21 @@
             }
 
             // Add Surat Jalan
-            $('.btn-add-surat').click(function() {
+            $('body').on('click', '.btn-add-surat', function() {
+                $(this).hide();
                 stopScanQr();
 
                 idStreamAll++;
-                let html = `<div class="card mb-3" id="cardSuratJalan${idStreamAll}">
-                                <div class="card-header">
+                let html = `<div class="card mb-3 mb-4 bg-light border-0" id="cardSuratJalan${idStreamAll}">
+                                <div class="card-header border-0 bg-secondary-subtle">
                                     <div class="row align-items-center">
                                         <div class="col-6">
                                             Surat Jalan
                                         </div>
                                         <div class="col-6 text-end">
-                                            <button type="button" class="btn btn-danger btn-remove-card-surat" data-id="${idStreamAll}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i class="fa-solid fa-trash"></i></button>
+                                            <button class="btn btn-secondary btn-add-surat" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" type="button"><i class="fa-solid fa-plus"></i>&nbsp; Tambah Surat</button>
+                                            &nbsp;
+                                            <button type="button" class="btn btn-danger bg-danger-subtle btn-remove-card-surat border-danger" data-id="${idStreamAll}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i class="text-danger fa-solid fa-trash"></i></button>
                                         </div>
                                     </div>
                                 </div>

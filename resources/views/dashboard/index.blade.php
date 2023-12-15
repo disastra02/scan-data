@@ -4,8 +4,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-body">
+            <div class="card mb-4 border-0">
+                <div class="card-body p-2">
                     <div class="row align-items-center">
                         <div class="col-8">
                             <h1 class="fw-bold">Checker</h2>
@@ -25,32 +25,31 @@
         </div>
 
         <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-4">
-                            <div class="card border-0">
-                                <div class="card-body p-0 text-center">
-                                    <h6 class="text-black-50">Kendaraan</h6>
-                                    <h5 class="mb-0 fw-bold">{{ $totalKendaraan }}</h5>
-                                </div>
-                            </div>
+            <div class="row align-items-center mb-4">
+                <div class="col-4">
+                    <div class="card border-0 text-bg-primary">
+                        <div class="card-body">
+                            <h2 class="fw-bold mb-3"><i class="fa-solid fa-truck"></i></h2>
+                            <span class="text-white-50">Kendaraan</span>
+                            <h5 class="mb-0 fw-bold">{{ $totalKendaraan }}</h5>
                         </div>
-                        <div class="col-4">
-                            <div class="card border-0">
-                                <div class="card-body p-0 text-center">
-                                    <h6 class="text-black-50">Surat</h6>
-                                    <h5 class="mb-0 fw-bold">{{ $totalSurat }}</h5>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card border-0 text-bg-danger">
+                        <div class="card-body">
+                            <h2 class="fw-bold mb-3"><i class="fa-solid fa-envelope"></i></h2>
+                            <span class="text-white-50">Surat</span>
+                            <h5 class="mb-0 fw-bold">{{ $totalSurat }}</h5>
                         </div>
-                        <div class="col-4">
-                            <div class="card border-0">
-                                <div class="card-body p-0 text-center">
-                                    <h6 class="text-black-50">Berat</h6>
-                                    <h5 class="mb-0 fw-bold">{{ $totalBerat }} KG</h5>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card text-bg-success border-0">
+                        <div class="card-body">
+                            <h2 class="fw-bold mb-3"><i class="fa-solid fa-weight-scale"></i></h2>
+                            <span class="text-white-50">Berat</span>
+                            <h5 class="mb-0 fw-bold">{{ $totalBerat }} KG</h5>
                         </div>
                     </div>
                 </div>
@@ -58,14 +57,15 @@
         </div>
 
         <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-body">
+            <div class="card mb-4 border-0">
+                <div class="card-body p-2">
                     <div class="row align-items-center">
-                        <div class="col-8">
+                        <div class="col-6">
                             <h5 class="fw-bold mb-0">Data Timbangan</h5>
                         </div>
-                        <div class="col-4 d-flex justify-content-end">
-                            <a href="{{ route('timbangan.create') }}" class="btn btn-primary" type="button"><i class="fa-solid fa-plus"></i> &nbsp; Tambah</a>
+                        <div class="col-6 d-flex justify-content-end">
+                            <a href="{{ route('timbangan.create') }}" class="btn btn-primary" type="button"><i class="fa-solid fa-plus"></i> &nbsp; Tambah</a> &nbsp; &nbsp;
+                            <button class="btn btn-secondary"><i class="fa-solid fa-filter"></i></button>
                         </div>
                     </div>
                 </div>
@@ -94,16 +94,16 @@
         <div>
             @forelse ($kendaraan as $item)
                 <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header">
+                    <div class="card mb-4 bg-light border-0">
+                        <div class="card-header border-0 bg-secondary-subtle">
                             <div class="row align-items-center">
                                 <div class="col-9">
-                                    <h6 class="mb-1 text-black-50">Nomor Kendaraan</h6>
+                                    <span class="mb-1 text-black-50">Nomor Kendaraan</span>
                                     <h5 class="mb-0 fw-bold">{{ $item->no_kendaraan }}</h5>
                                 </div>
                                 <div class="col-3 d-flex justify-content-end">
                                     <div class="dropdown">
-                                        <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn btn-light bg-transparent border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
                                         <ul class="dropdown-menu">
@@ -118,19 +118,19 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-6 mb-3">
-                                    <h6 class="mb-1 text-black-50">Surat Jalan</h6>
+                                    <span class="mb-1 text-black-50">Surat Jalan</span>
                                     <h5 class="mb-0 fw-bold">{{ getJumlahSurat($item->id) }}</h5>
                                 </div>
                                 <div class="col-6 mb-3">
-                                    <h6 class="mb-1 text-black-50">Total Berat</h6>
+                                    <span class="mb-1 text-black-50">Total Berat</span>
                                     <h5 class="mb-0 fw-bold">{{ getJumlahBerat($item->id) }} KG</h5>
                                 </div>
                                 <div class="col-6">
-                                    <h6 class="mb-1 text-black-50">Tanggal</h6>
+                                    <span class="mb-1 text-black-50">Tanggal</span>
                                     <h5 class="mb-0 fw-bold">{{ $item->created_at->format('Y-m-d'); }}</h5>
                                 </div>
                                 <div class="col-6">
-                                    <h6 class="mb-1 text-black-50">Waktu</h6>
+                                    <span class="mb-1 text-black-50">Waktu</span>
                                     <h5 class="mb-0 fw-bold">{{ $item->created_at->format('H:i'); }}</h5>
                                 </div>
                             </div>
@@ -138,7 +138,11 @@
                     </div>
                 </div>
             @empty
-                <span class="text-center">Tidak ada data.</span>
+                <div class="w-100 text-center">
+                    <div class="alert alert-danger" role="alert">
+                        Tidak ada data hari ini.
+                    </div>
+                </div>
             @endforelse
         </div>
     </div>
