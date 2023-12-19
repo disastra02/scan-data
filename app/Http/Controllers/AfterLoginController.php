@@ -19,7 +19,7 @@ class AfterLoginController extends Controller
         if ($user->is_mobile) {
             return redirect()->route('home');
         } else {
-            return redirect()->route('dashboard.index');
+            return redirect()->route('w-dashboard.index');
         }
     }
 }

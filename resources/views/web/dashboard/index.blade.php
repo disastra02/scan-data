@@ -3,7 +3,7 @@
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active text-white" aria-current="page">Home</li>
+            <li class="breadcrumb-item active text-white" aria-current="page">Dashboard</li>
         </ol>
     </nav>
 
@@ -81,9 +81,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($kendaraan as $item)
+                                    @foreach ($kendaraan as $item)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ getUser($item->created_by) ? getUser($item->created_by)->name : '-' }}</td>
                                             <td>{{ $item->no_kendaraan }}</td>
                                             <td>{{ getJumlahSurat($item->id) }} Surat</td>
@@ -95,20 +95,20 @@
                                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="#">Action</a></li>
-                                                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                                        <li><hr class="dropdown-divider"></li>
-                                                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('w-timbangan.show', $item->id) }}">Detail</a></li>
+                                                        <li>
+                                                            <form action="{{ route('w-timbangan.destroy', $item->id) }}" method="POST">
+                                                                @method("DELETE")
+                                                                @csrf
+            
+                                                                <a class="dropdown-item delete-data" type="submit">Hapus</a>
+                                                            </form>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </td>
                                         </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="7" class="text-center text-danger">Tidak ada data.</td>
-                                        </tr>
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -121,38 +121,59 @@
 
 @push('scripts')
     <script>
-        const ctx = document.getElementById('myChart');
+        $(document).ready(function() {
+            const ctx = document.getElementById('myChart');
 
-        new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Aktivitas Checker'
-                }
+            new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+                }]
             },
-            scales: {
-                y: {
-                    beginAtZero: true
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Aktivitas Checker'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-        });
+            });
 
-        new DataTable('#datacek');
+            new DataTable('#datacek');
+            
+            // Button delete
+            $('.delete-data').click(function(e){
+                e.preventDefault();
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: `Data akan dihapus !`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Hapus",
+                    cancelButtonText: "Batal",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(e.target).closest('form').submit();
+                    }
+                });
+            });
+        });
     </script>
 @endpush

@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Master;
 
-use Illuminate\Http\Request;
-use App\Models\Master\Letter;
-use App\Models\Master\Timbangan;
-use App\Models\Master\Transport;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Web\JenisUser;
+use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class UsersController extends Controller
 {
     public function __construct()
     {
@@ -20,15 +17,10 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $data['page'] = 'dashboard';
-        $data['user'] = Auth::user();
-        $data['totalKendaraan'] = Transport::count(); 
-        $data['totalSurat'] = Letter::count(); 
-        $data['totalBerat'] = Timbangan::sum('berat_barang'); 
-        $data['totalChecker'] = User::where('id_jenis', 2)->count();
-        $data['kendaraan'] = Transport::orderBy('id', 'DESC')->get();
+        $data['page'] = 'users';
+        $data['users'] = User::with('jenisUsers')->orderBy('id', 'DESC')->get();
 
-        return view('web.dashboard.index', $data);
+        return view('web.master.users.index', $data);
     }
 
     /**

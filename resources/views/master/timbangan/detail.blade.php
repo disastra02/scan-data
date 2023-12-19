@@ -124,7 +124,7 @@
                         @empty
                             <div class="w-100 text-center">
                                 <div class="alert alert-danger" role="alert">
-                                    Tidak ada data hari ini.
+                                    Tidak ada data.
                                 </div>
                             </div>
                         @endforelse

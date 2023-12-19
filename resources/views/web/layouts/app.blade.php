@@ -42,6 +42,11 @@
         .h-90 {
             height: 95%;
         }
+
+        .breadcrumb-item+.breadcrumb-item::before {
+            --bs-text-opacity: 1;
+            color: rgba(var(--bs-white-rgb),var(--bs-text-opacity))!important;
+        }
     </style>
     @stack('css')
 </head>
@@ -72,5 +77,25 @@
 
     <!-- Custom Js -->
     @stack('scripts')
+    
+    @if (Session::has('success'))
+            <script>
+                Swal.fire({
+                    title: "Berhasil",
+                    text: `{{ Session::get('success') }}`,
+                    icon: "success"
+                });
+            </script>
+        @endif
+
+        @if (Session::has('error'))
+            <script>
+                Swal.fire({
+                    title: "Opps...",
+                    text: `{{ Session::get('error') }}`,
+                    icon: "error"
+                });
+            </script>
+        @endif
 </body>
 </html>

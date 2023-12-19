@@ -3,6 +3,9 @@
 use App\Http\Controllers\AfterLoginController;
 use App\Http\Controllers\Master\TimbanganController;
 use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\Web\Master\BarangController;
+use App\Http\Controllers\Web\Master\UsersController;
+use App\Http\Controllers\Web\TimbanganController as WebTimbanganController;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +32,11 @@ Route::get('/after-login', [AfterLoginController::class, 'index'])->name('after-
 // Timbangan
 Route::resource('timbangan', TimbanganController::class);
 
-
 // Website
-Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('w-dashboard', [DashboardController::class, 'index'])->name('w-dashboard.index');
+Route::resource('w-timbangan', WebTimbanganController::class);
+Route::resource('m-barang', BarangController::class);
+Route::resource('m-users', UsersController::class);
+
+
 
