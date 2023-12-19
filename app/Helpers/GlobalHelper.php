@@ -2,6 +2,7 @@
 
 use App\Models\Master\Letter;
 use App\Models\Master\Timbangan;
+use App\Models\User;
 
 if ( !function_exists('getJumlahSurat') )
 {
@@ -24,6 +25,15 @@ if ( !function_exists('getJumlahBerat') )
         }
 
         return $total;
+    }
+}
+
+if ( !function_exists('getUser') )
+{
+    function getUser($id){
+        $hasil = User::where("id", $id)->first();
+
+        return $hasil;
     }
 }
 

@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AfterLoginController;
 use App\Http\Controllers\Master\TimbanganController;
+use App\Http\Controllers\Web\DashboardController;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,12 +18,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/after-login', [AfterLoginController::class, 'index'])->name('after-login');
 
 // Timbangan
 Route::resource('timbangan', TimbanganController::class);
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+

@@ -8,7 +8,7 @@
                 <div class="card-body p-2">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h1 class="fw-bold">Checker</h2>
+                            <h1 class="fw-bold">{{ $user->name }}</h2>
                             <h6 class="mb-0 text-black-50">Summary Dashboard</h5>
                         </div>
                         <div class="col-4">
@@ -27,28 +27,28 @@
         <div class="col-12">
             <div class="row align-items-center mb-4">
                 <div class="col-4">
-                    <div class="card border-0 text-bg-primary">
+                    <div class="card border-0 bg-primary-subtle text-primary border-0">
                         <div class="card-body">
                             <h2 class="fw-bold mb-3"><i class="fa-solid fa-truck"></i></h2>
-                            <span class="text-white-50">Kendaraan</span>
+                            <span>Kendaraan</span>
                             <h5 class="mb-0 fw-bold">{{ $totalKendaraan }}</h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-4">
-                    <div class="card border-0 text-bg-danger">
+                    <div class="card border-0 bg-secondary-subtle text-secondary border-0">
                         <div class="card-body">
                             <h2 class="fw-bold mb-3"><i class="fa-solid fa-envelope"></i></h2>
-                            <span class="text-white-50">Surat</span>
+                            <span>Surat</span>
                             <h5 class="mb-0 fw-bold">{{ $totalSurat }}</h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-4">
-                    <div class="card text-bg-success border-0">
+                    <div class="card bg-success-subtle text-success border-0">
                         <div class="card-body">
                             <h2 class="fw-bold mb-3"><i class="fa-solid fa-weight-scale"></i></h2>
-                            <span class="text-white-50">Berat</span>
+                            <span>Berat</span>
                             <h5 class="mb-0 fw-bold">{{ $totalBerat }} KG</h5>
                         </div>
                     </div>
