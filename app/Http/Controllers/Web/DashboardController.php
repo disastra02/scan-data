@@ -27,7 +27,7 @@ class DashboardController extends Controller
         $data['totalChecker'] = User::where('id_jenis', 2)->count();
         $data['kendaraan'] = Transport::orderBy('id', 'DESC')->get();
 
-        return view('layouts_web.app', $data);
+        return view('web.dashboard.index', $data);
     }
 
     /**

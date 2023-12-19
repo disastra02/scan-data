@@ -28,5 +28,8 @@ Route::get('/after-login', [AfterLoginController::class, 'index'])->name('after-
 
 // Timbangan
 Route::resource('timbangan', TimbanganController::class);
+
+
+// Website
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
