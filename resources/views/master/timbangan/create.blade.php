@@ -50,8 +50,11 @@
                                     </div>
                                     <div class="d-flex flex-column">
                                         <label for="scanBarcode" class="form-label">Scan Barcode</label>
+                                        <button class="btn btn-qr-all btn-success btn-qr-code" data-id="1" type="button"><i class="fa-solid fa-camera"></i> &nbsp; Start Scan </button>
                                         <div class="text-center" id="scanDiv1" style="display: none;">
-                                            <table class="table align-middle">
+                                            <div class="mt-3" id="loadCamera1"><i class="fa-solid fa-spinner fa-spin-pulse"></i></div>
+                                            <div class="my-3" id="reader1" style="display: none;"></div>
+                                            <table class="table align-middle mb-0">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-start" width="55%">Kode Barang</th>
@@ -62,10 +65,7 @@
                                                 <tbody id="tbody1">
                                                 </tbody>
                                             </table>
-                                            <div class="mb-3" id="loadCamera1"><i class="fa-solid fa-spinner fa-spin-pulse"></i></div>
-                                            <div class="mb-3" id="reader1" style="display: none;"></div>
                                         </div>
-                                        <button class="btn btn-qr-all btn-success btn-qr-code" data-id="1" type="button"><i class="fa-solid fa-camera"></i> &nbsp; Start Scan </button>
                                     </div>
                                 </div>
                             </div>
@@ -91,12 +91,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js" integrity="sha512-r6rDA7W6ZeQhvl8S7yRVQUKVHdexq+GAlNkNNqVC7YyIV+NwqCTJe2hDWCiffTyRNOeGEzRRJ9ifvRm/HCzGYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function() {
+            var dataBarang = JSON.parse(`{!! json_encode($dataBarang) !!}`);
             var statusStream = false, htmlQrCodeAktif = null;
             var idStreamAll = 1, idStreamAktif = 0;
             var arrayDataTimbangan = [];
 
             // Memulai scan data
             $('body').on('click', '.btn-qr-code', function() {
+                $(this).attr("disabled", true);
+
                 let nomerIdStream = $(this).data('id');
                 if (htmlQrCodeAktif) {
                     stopScanQr();
@@ -120,6 +123,11 @@
                     $(`#loadCamera${nomerIdStream}`).show();
                     $(`#scanDiv${nomerIdStream}`).show();
                 }
+
+                setTimeout(() => {
+                    $(this).removeAttr("disabled");
+                }, 2000);
+
             });
 
             // Hapus data scan
@@ -215,11 +223,13 @@
                         resultQr => {
                             let kodeBarangId = resultQr ? resultQr.substr(0, 7) : 0;
                             let beratBarangId = resultQr ? resultQr.substr(8, 4) / 100 : 0;
+                            let barang = dataBarang[kodeBarangId];
+                            let namaBarang = barang ? barang['name'] : '-';
                             html5QrCode.pause();
                             
                             Swal.fire({
                                 title: "Apakah anda yakin ?",
-                                text: `Data dengan kode barang ${kodeBarangId} dan berat ${beratBarangId} kg akan disimpan !`,
+                                text: `Data barang ${namaBarang} dan berat ${beratBarangId} kg akan disimpan !`,
                                 icon: "warning",
                                 showCancelButton: true,
                                 confirmButtonColor: "#3085d6",
@@ -230,14 +240,13 @@
                                 if (result.isConfirmed) {
                                     let valueQr = `${idStream}-${resultQr}`;
 
-                                    if ($.inArray(valueQr, arrayDataTimbangan) != -1) {
-                                        alertCustom("error", "Terjadi Kesalahan !", "Data sudah digunakan.");
-                                    } else {
-                                        arrayDataTimbangan.push(valueQr);
-    
+                                    // if ($.inArray(valueQr, arrayDataTimbangan) != -1) {
+                                    //     alertCustom("error", "Terjadi Kesalahan !", "Data sudah digunakan.");
+                                    // } else {
+                                    //     arrayDataTimbangan.push(valueQr);
                                         let html = `<tr id="qrValue${valueQr}">
                                                         <td class="text-start">
-                                                            ${kodeBarangId}
+                                                            ${namaBarang}
                                                             <input type="hidden" name="kode_barang[]" value="${kodeBarangId}">
                                                         </td>
                                                         <td class="text-start">
@@ -250,7 +259,7 @@
                                                         </td>
                                                     </tr>`;
                                         $(`#tbody${idStream}`).append(html);
-                                    }
+                                    // }
                                     html5QrCode.resume();
                                 } else {
                                     html5QrCode.resume();
@@ -325,7 +334,10 @@
                                     </div>
                                     <div class="d-flex flex-column">
                                         <label for="scanBarcode" class="form-label">Scan Barcode</label>
+                                        <button class="btn btn-qr-all btn-success btn-qr-code" data-id="${idStreamAll}" type="button"><i class="fa-solid fa-camera"></i> &nbsp; Start Scan </button>
                                         <div class="text-center" id="scanDiv${idStreamAll}" style="display: none;">
+                                            <div class="mt-3" id="loadCamera${idStreamAll}"><i class="fa-solid fa-spinner fa-spin-pulse"></i></div>
+                                            <div class="my-3" id="reader${idStreamAll}" style="display: none;"></div>
                                             <table class="table align-middle">
                                                 <thead>
                                                     <tr>
@@ -337,10 +349,7 @@
                                                 <tbody id="tbody${idStreamAll}">
                                                 </tbody>
                                             </table>
-                                            <div class="mb-3" id="loadCamera${idStreamAll}"><i class="fa-solid fa-spinner fa-spin-pulse"></i></div>
-                                            <div class="mb-3" id="reader${idStreamAll}" style="display: none;"></div>
                                         </div>
-                                        <button class="btn btn-qr-all btn-success btn-qr-code" data-id="${idStreamAll}" type="button"><i class="fa-solid fa-camera"></i> &nbsp; Start Scan </button>
                                     </div>
                                 </div>
                             </div>`;

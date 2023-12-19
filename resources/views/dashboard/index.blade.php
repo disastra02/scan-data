@@ -107,8 +107,7 @@
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Detail</a></li>
-                                            <li><a class="dropdown-item" href="#">Perbarui</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('timbangan.show', $item->id) }}">Detail</a></li>
                                             <li><a class="dropdown-item" href="#">Hapus</a></li>
                                         </ul>
                                     </div>

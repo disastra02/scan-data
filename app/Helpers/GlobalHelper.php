@@ -28,6 +28,15 @@ if ( !function_exists('getJumlahBerat') )
     }
 }
 
+if ( !function_exists('getJumlahBeratLetter') )
+{
+    function getJumlahBeratLetter($id){
+        $hasil = Timbangan::where("id_letter", $id)->sum('berat_barang');
+
+        return $hasil;
+    }
+}
+
 if ( !function_exists('getUser') )
 {
     function getUser($id){

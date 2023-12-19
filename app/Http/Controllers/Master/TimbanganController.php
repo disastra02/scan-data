@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
+use App\Models\Master\Barang;
 use App\Models\Master\Letter;
 use App\Models\Master\Timbangan;
 use App\Models\Master\Transport;
@@ -25,12 +26,10 @@ class TimbanganController extends Controller
 
     public function create()
     {
-        return view('master.timbangan.create');
+        $data['dataBarang'] = Barang::get()->keyBy('kode');
+        return view('master.timbangan.create', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $req)
     {
         // User created
@@ -76,12 +75,19 @@ class TimbanganController extends Controller
         return redirect()->route('home');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        // Transport
+        $data['transport'] = Transport::where('id', $id)->first();
+        
+        // Surat Jalan
+        $data['suratJalan'] = Letter::with([
+            'timbangans' => function ($query) {
+                $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
+            }
+        ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
+
+        return view('master.timbangan.detail', $data);
     }
 
     /**
