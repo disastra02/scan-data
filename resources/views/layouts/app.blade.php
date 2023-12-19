@@ -42,6 +42,26 @@
         <!-- SweetAlert -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
         @stack('scripts')
+
+        @if (Session::has('success'))
+            <script>
+                Swal.fire({
+                    title: "Berhasil",
+                    text: `{{ Session::get('success') }}`,
+                    icon: "success"
+                });
+            </script>
+        @endif
+
+        @if (Session::has('error'))
+            <script>
+                Swal.fire({
+                    title: "Opps...",
+                    text: `{{ Session::get('error') }}`,
+                    icon: "error"
+                });
+            </script>
+        @endif
     {{-- </div> --}}
 </body>
 </html>

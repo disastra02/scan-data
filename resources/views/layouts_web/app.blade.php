@@ -85,7 +85,7 @@
                     </ol>
                 </nav>
 
-                <div class="card">
+                <div class="card shadow-lg">
                     <div class="card-body">
                         <div class="card-title mb-4">
                             <h3 class="fw-bold mb-0">Summary Dashboard</h3>

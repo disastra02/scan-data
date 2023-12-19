@@ -10,6 +10,8 @@ use App\Models\Master\Transport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Throwable;
 
 class TimbanganController extends Controller
 {
@@ -32,62 +34,74 @@ class TimbanganController extends Controller
 
     public function store(Request $req)
     {
-        // User created
-        $user = Auth::user();
+        try {
 
-        // Validation
+            // User created
+            $user = Auth::user();
 
-        // Save transport
-        $transport = Transport::create([
-            'no_kendaraan' => strtoupper($req->input('nomor_kendaraan')),
-            'created_by' => $user->id
-        ]);
+            // Validation
 
-        // Surat Jalan & Timbangan
-        $dataAllSuratJalan = $req->input('nomer_surat');
-        $dataAllBarcode = $req->input('nomer_barcode');
-
-        foreach ($dataAllSuratJalan as $keySurat => $dtSurat) {
-            $suratJalan = Letter::create([
-                'no_surat' => $req->input('surat_jalan.'.$keySurat),
-                'id_transport' => $transport->id,
+            // Save transport
+            $transport = Transport::create([
+                'no_kendaraan' => strtoupper($req->input('nomor_kendaraan')),
                 'created_by' => $user->id
             ]);
 
-            if ($dataAllBarcode) {
-                foreach ($dataAllBarcode as $keyBarcode => $dtBarcode) {
-                    if ($dtSurat != $dtBarcode) {
-                        break;
-                    } 
-    
-                    Timbangan::create([
-                        'id_letter' => $suratJalan->id,
-                        'kode_barang' => $req->input('kode_barang.'.$keyBarcode),
-                        'berat_barang' => $req->input('berat_barang.'.$keyBarcode),
-                        'created_by' => $user->id
-                    ]);
-    
-                    unset($dataAllBarcode[$keyBarcode]);
+            // Surat Jalan & Timbangan
+            $dataAllSuratJalan = $req->input('nomer_surat');
+            $dataAllBarcode = $req->input('nomer_barcode');
+
+            foreach ($dataAllSuratJalan as $keySurat => $dtSurat) {
+                $suratJalan = Letter::create([
+                    'no_surat' => $req->input('surat_jalan.'.$keySurat),
+                    'id_transport' => $transport->id,
+                    'created_by' => $user->id
+                ]);
+
+                if ($dataAllBarcode) {
+                    foreach ($dataAllBarcode as $keyBarcode => $dtBarcode) {
+                        if ($dtSurat != $dtBarcode) {
+                            break;
+                        } 
+        
+                        Timbangan::create([
+                            'id_letter' => $suratJalan->id,
+                            'kode_barang' => $req->input('kode_barang.'.$keyBarcode),
+                            'berat_barang' => $req->input('berat_barang.'.$keyBarcode),
+                            'created_by' => $user->id
+                        ]);
+        
+                        unset($dataAllBarcode[$keyBarcode]);
+                    }
                 }
             }
-        }
 
-        return redirect()->route('home');
+            Session::flash('success', 'Berhasil menambahkan data.');
+            return redirect()->route('home');
+        } catch (Throwable $e) {
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('home');
+        }
     }
 
     public function show(string $id)
     {
-        // Transport
-        $data['transport'] = Transport::where('id', $id)->first();
-        
-        // Surat Jalan
-        $data['suratJalan'] = Letter::with([
-            'timbangans' => function ($query) {
-                $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
-            }
-        ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
+        try {
+            // Transport
+            $data['transport'] = Transport::where('id', $id)->first();
+            
+            // Surat Jalan
+            $data['suratJalan'] = Letter::with([
+                'timbangans' => function ($query) {
+                    $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
+                }
+            ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
 
-        return view('master.timbangan.detail', $data);
+            return view('master.timbangan.detail', $data);
+        } catch (Throwable $e) {
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('home');
+        }
     }
 
     /**
@@ -106,11 +120,29 @@ class TimbanganController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        try {
+            $transport = Transport::where('id', $id);
+            $dataSurat = Letter::where("id_transport", $transport->first()->id);
+
+            foreach($dataSurat->get() as $dt) {
+                // Remove Timbangan
+                Timbangan::where("id_letter", $dt->id)->delete();
+                
+            }
+            // Remove Letter
+            $dataSurat->delete();
+
+            // Remove Transport
+            $transport->delete();
+
+            Session::flash('success', 'Berhasil menghapus data.');
+            return redirect()->route('home');
+        } catch (Throwable $e) {
+
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('home');
+        }
     }
 }

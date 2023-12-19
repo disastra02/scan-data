@@ -13,7 +13,14 @@
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
                         <ul class="dropdown-menu">
-                            {{-- <li><a class="dropdown-item" href="#">Print Data</a></li> --}}
+                            <li>
+                                <form action="{{ route('timbangan.destroy', $transport->id) }}" method="POST">
+                                    @method("DELETE")
+                                    @csrf
+
+                                    <a class="dropdown-item delete-data" type="submit">Hapus</a>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -63,7 +70,6 @@
                             <h5 class="mb-0 fw-bold">{{ getJumlahBerat($transport->id) }} KG</h5>
                         </div>
                     </div>
-
                     <div class="row">
                         @forelse ($suratJalan as $item)
                             <div class="col-12">
@@ -74,7 +80,6 @@
                                     <div class="card-body">
                                         <span class="mb-1 text-black-50">Nomer Surat Jalan</span>
                                         <h5 class="mb-0 fw-bold">{{ $item->no_surat }}</h5>
-
                                         @if ($item->timbangans)
                                             <p class="mb-1 mt-3 text-black-50">Data Barang</p>
                                             <table class="table align-middle mb-0">
@@ -100,7 +105,9 @@
                                                             </tr>
                                                         @endif
                                                     @empty
-                                                    
+                                                        <tr>
+                                                            <td colspan="3" class="text-danger text-center">Tidak ada data</td>
+                                                        </tr>
                                                     @endforelse
                                                 </tbody>
                                             </table>
@@ -142,6 +149,25 @@
             $('.back-page').on('click', function() {
                 let url = `{{ route('home') }}`;
                 window.location.href = url;
+            });
+
+            // Button delete
+            $('.delete-data').click(function(e){
+                e.preventDefault();
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: `Data akan dihapus !`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Hapus",
+                    cancelButtonText: "Batal",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(e.target).closest('form').submit();
+                    }
+                });
             });
         });
     </script>

@@ -108,7 +108,14 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="{{ route('timbangan.show', $item->id) }}">Detail</a></li>
-                                            <li><a class="dropdown-item" href="#">Hapus</a></li>
+                                            <li>
+                                                <form action="{{ route('timbangan.destroy', $item->id) }}" method="POST">
+                                                    @method("DELETE")
+                                                    @csrf
+
+                                                    <a class="dropdown-item delete-data" type="submit">Hapus</a>
+                                                </form>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -147,3 +154,28 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            // Button delete
+            $('.delete-data').click(function(e){
+                e.preventDefault();
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: `Data akan dihapus !`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Hapus",
+                    cancelButtonText: "Batal",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(e.target).closest('form').submit();
+                    }
+                });
+            });
+        });
+    </script>
+    @endpush
