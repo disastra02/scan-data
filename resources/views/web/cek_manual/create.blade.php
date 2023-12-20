@@ -41,7 +41,7 @@
                     <div class="col-md-8">
                         <div class="mb-3">
                             <label for="nomorKendaraan" class="form-label">Nomor Kendaraan <span class="text-danger">*</span></label>
-                            <input type="text" name="nomor_kendaraan" class="form-control" id="nomorKendaraan" placeholder="Masukkan Nomor Kendaraan" required>
+                            <input type="text" name="nomor_kendaraan" class="form-control" id="nomorKendaraan" autocomplete="off" placeholder="Masukkan Nomor Kendaraan" required>
                         </div>
                         
                         <div id="sectionSuratJalan">
@@ -56,7 +56,7 @@
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label for="suratJalan" class="form-label">No Surat Jalan <span class="text-danger">*</span></label>
-                                        <input type="text" name="surat_jalan[]" class="form-control" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
+                                        <input type="text" name="surat_jalan[]" class="form-control" autocomplete="off" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
                                         <input type="hidden" name="nomer_surat[]" value="1">
                                     </div>
                                     <div class="d-flex flex-column mb-3">
@@ -80,7 +80,7 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="number" step=".001" class="form-control" name="berat_barang[]" placeholder="Berat" required>
+                                                        <input type="number" step=".001" class="form-control" autocomplete="off" name="berat_barang[]" placeholder="Berat" required>
                                                     </td>
                                                     <td class="text-center">
                                                         <input type="hidden" name="nomer_barcode[]" value="1">
@@ -159,7 +159,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" step=".001" class="form-control" name="berat_barang[]" placeholder="Berat">
+                                    <input type="number" step=".001" class="form-control" autocomplete="off" name="berat_barang[]" placeholder="Berat">
                                 </td>
                                 <td class="text-center">
                                     <input type="hidden" name="nomer_barcode[]" value="${idStream}">
@@ -208,7 +208,7 @@
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label for="suratJalan" class="form-label">No Surat Jalan <span class="text-danger">*</span></label>
-                                        <input type="text" name="surat_jalan[]" class="form-control" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
+                                        <input type="text" name="surat_jalan[]" class="form-control" autocomplete="off" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
                                         <input type="hidden" name="nomer_surat[]" value="${idStreamAll}">
                                     </div>
                                     <div class="d-flex flex-column mb-3">
@@ -232,7 +232,7 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="number" step=".001" class="form-control" name="berat_barang[]" placeholder="Berat">
+                                                        <input type="number" step=".001" class="form-control" autocomplete="off" name="berat_barang[]" placeholder="Berat">
                                                     </td>
                                                     <td class="text-center">
                                                         <input type="hidden" name="nomer_barcode[]" value="${idStreamAll}">

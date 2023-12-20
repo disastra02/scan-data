@@ -9,6 +9,7 @@ use App\Models\Master\Transport;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -20,6 +21,9 @@ class DashboardController extends Controller
 
     public function index()
     {
+        $jumlahTanggal = 6;
+        $data['tanggal'] = [];
+        $data['jumlah'] = [];
         $data['page'] = 'dashboard';
         $data['user'] = Auth::user();
         $data['totalKendaraan'] = Transport::count(); 
@@ -27,6 +31,14 @@ class DashboardController extends Controller
         $data['totalBerat'] = Timbangan::sum('berat_barang'); 
         $data['totalChecker'] = User::where('id_jenis', 2)->count();
         $data['kendaraan'] = Transport::whereNot('created_by', $data['user']->id)->orderBy('id', 'DESC')->get();
+
+        for($jumlahTanggal; $jumlahTanggal >= 0; $jumlahTanggal--) {
+            $day = date('Y-m-d', strtotime('-'.$jumlahTanggal.' days'));
+            $total = Transport::whereDate('created_at', $day)->count();
+
+            array_push($data['tanggal'], $day);
+            array_push($data['jumlah'], $total);
+        }
 
         return view('web.dashboard.index', $data);
     }

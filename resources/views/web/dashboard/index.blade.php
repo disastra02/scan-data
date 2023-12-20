@@ -127,10 +127,10 @@
             new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: @json($tanggal),
                 datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Jumlah',
+                data: @json($jumlah),
                 borderWidth: 1
                 }]
             },

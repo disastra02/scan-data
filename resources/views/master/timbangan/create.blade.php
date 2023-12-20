@@ -27,7 +27,7 @@
                     <div class="card-body p-2">
                         <div class="mb-3">
                             <label for="nomorKendaraan" class="form-label">Nomor Kendaraan <span class="text-danger">*</span></label>
-                            <input type="text" name="nomor_kendaraan" class="form-control" id="nomorKendaraan" placeholder="Masukkan Nomor Kendaraan" required>
+                            <input type="text" name="nomor_kendaraan" class="form-control" id="nomorKendaraan" autocomplete="off" placeholder="Masukkan Nomor Kendaraan" required>
                         </div>
                         
                         <div id="sectionSuratJalan">
@@ -45,7 +45,7 @@
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label for="suratJalan" class="form-label">No Surat Jalan <span class="text-danger">*</span></label>
-                                        <input type="text" name="surat_jalan[]" class="form-control" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
+                                        <input type="text" name="surat_jalan[]" class="form-control" autocomplete="off" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
                                         <input type="hidden" name="nomer_surat[]" value="1">
                                     </div>
                                     <div class="d-flex flex-column">
@@ -237,7 +237,7 @@
                         },
                         resultQr => {
                             let kodeBarangId = resultQr ? resultQr.substr(0, 7) : 0;
-                            let beratBarangId = resultQr ? resultQr.substr(8, 4) / 100 : 0;
+                            let beratBarangId = resultQr ? resultQr.substr(7, 4) / 10 : 0;
                             let barang = dataBarang[kodeBarangId];
                             let namaBarang = barang ? barang['name'] : '-';
                             html5QrCode.pause();
@@ -342,7 +342,7 @@
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label for="suratJalan" class="form-label">No Surat Jalan <span class="text-danger">*</span></label>
-                                        <input type="text" name="surat_jalan[]" class="form-control" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
+                                        <input type="text" name="surat_jalan[]" class="form-control" autocomplete="off" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
                                         <input type="hidden" name="nomer_surat[]" value="${idStreamAll}">
                                     </div>
                                     <div class="d-flex flex-column">
