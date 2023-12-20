@@ -26,7 +26,7 @@ class DashboardController extends Controller
         $data['totalSurat'] = Letter::count(); 
         $data['totalBerat'] = Timbangan::sum('berat_barang'); 
         $data['totalChecker'] = User::where('id_jenis', 2)->count();
-        $data['kendaraan'] = Transport::orderBy('id', 'DESC')->get();
+        $data['kendaraan'] = Transport::whereNot('created_by', $data['user']->id)->orderBy('id', 'DESC')->get();
 
         return view('web.dashboard.index', $data);
     }

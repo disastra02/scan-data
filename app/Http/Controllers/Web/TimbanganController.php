@@ -55,7 +55,7 @@ class TimbanganController extends Controller
             return view('web.timbangan.detail', $data);
         } catch (Throwable $e) {
             Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
-            return redirect()->route('home');
+            return redirect()->route('w-dashboard.index');
         }
     }
 

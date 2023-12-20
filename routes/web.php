@@ -37,6 +37,8 @@ Route::resource('timbangan', TimbanganController::class);
 // Website
 Route::get('w-dashboard', [DashboardController::class, 'index'])->name('w-dashboard.index');
 Route::resource('w-timbangan', WebTimbanganController::class);
+Route::get('w-cek-manual/{id}/perbandingan', [MasterTimbanganController::class, 'perbandingan'])->name('w-cek-manual.perbandingan');
+Route::get('w-cek-manual/perbandingan-detail', [MasterTimbanganController::class, 'perbandinganDetail'])->name('w-cek-manual.perbandinganDetail');
 Route::resource('w-cek-manual', MasterTimbanganController::class);
 Route::resource('m-barang', BarangController::class);
 Route::resource('m-users', UsersController::class);

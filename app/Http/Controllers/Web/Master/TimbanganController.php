@@ -88,12 +88,62 @@ class TimbanganController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        try {
+            // Transport
+            $data['transport'] = Transport::where('id', $id)->first();
+            
+            // Surat Jalan
+            $data['suratJalan'] = Letter::with([
+                'timbangans' => function ($query) {
+                    $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
+                }
+            ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
+
+            return view('web.cek_manual.detail', $data);
+        } catch (Throwable $e) {
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('w-cek-manual.index');
+        }
+    }
+
+    public function perbandingan(string $id)
+    {
+        try {
+            // Transport
+            $data['user'] = Auth::user();
+            $data['transport'] = Transport::where('id', $id)->first();
+            $data['kendaraan'] = Transport::whereNot('created_by', $data['user']->id)->orderBy('id', 'DESC')->get();
+            
+            // Surat Jalan
+            $data['suratJalan'] = Letter::with([
+                'timbangans' => function ($query) {
+                    $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
+                }
+            ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
+
+            return view('web.cek_manual.perbandingan', $data);
+        } catch (Throwable $e) {
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('w-cek-manual.index');
+        }
+    }
+
+    public function perbandinganDetail(Request $req)
+    {
+        // Transport
+        $id = $req->get('id');
+        $data['transport'] = Transport::where('id', $id)->first();
+        
+        // Surat Jalan
+        $data['suratJalan'] = Letter::with([
+            'timbangans' => function ($query) {
+                $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
+            }
+        ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
+
+        return view('web.cek_manual.perbandingan_detail', $data);
     }
 
     /**
@@ -117,6 +167,27 @@ class TimbanganController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $transport = Transport::where('id', $id);
+            $dataSurat = Letter::where("id_transport", $transport->first()->id);
+
+            foreach($dataSurat->get() as $dt) {
+                // Remove Timbangan
+                Timbangan::where("id_letter", $dt->id)->delete();
+                
+            }
+            // Remove Letter
+            $dataSurat->delete();
+
+            // Remove Transport
+            $transport->delete();
+
+            Session::flash('success', 'Berhasil menghapus data.');
+            return redirect()->route('w-cek-manual.index');
+        } catch (Throwable $e) {
+
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('w-cek-manual.index');
+        }
     }
 }

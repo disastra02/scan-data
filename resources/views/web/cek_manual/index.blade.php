@@ -13,7 +13,7 @@
             <div class="card-title mb-4">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                        <h3 class="fw-bold mb-0">Cek Barang Manual</h3>
+                        <h3 class="fw-bold mb-0">Cek Manual</h3>
                         <span class="text-black-50">Lorem ipsum dolor</span>
                     </div>
                     <div class="col-md-6 text-end">
@@ -48,9 +48,10 @@
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="{{ route('w-timbangan.show', $item->id) }}">Detail</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('w-cek-manual.show', $item->id) }}">Detail</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('w-cek-manual.perbandingan', $item->id) }}">Perbandingan</a></li>
                                         <li>
-                                            <form action="{{ route('w-timbangan.destroy', $item->id) }}" method="POST">
+                                            <form action="{{ route('w-cek-manual.destroy', $item->id) }}" method="POST">
                                                 @method("DELETE")
                                                 @csrf
 
@@ -72,6 +73,25 @@
     <script>
         $(document).ready(function() {
             new DataTable('#datacek');
+
+            // Button delete
+            $('.delete-data').click(function(e){
+                e.preventDefault();
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: `Data akan dihapus !`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Hapus",
+                    cancelButtonText: "Batal",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(e.target).closest('form').submit();
+                    }
+                });
+            });
         });
     </script>
 @endpush
