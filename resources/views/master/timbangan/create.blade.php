@@ -38,7 +38,7 @@
                                             Surat Jalan
                                         </div>
                                         <div class="col-6 text-end">
-                                            <button class="btn btn-secondary btn-add-surat" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" type="button"><i class="fa-solid fa-plus"></i>&nbsp; Tambah Surat</button>
+                                            {{-- <button class="btn btn-secondary btn-add-surat" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" type="button"><i class="fa-solid fa-plus"></i>&nbsp; Tambah Surat</button> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +70,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row justify-content-end">
+
+                        <hr>
+                        <div class="card border-0 bg-secondary-subtle">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-6">
+                                        <p class="fw-medium mb-0">Tambah Data Surat Jalan</p>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button class="btn btn-secondary btn-add-surat" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" type="button"><i class="fa-solid fa-plus"></i>&nbsp; Tambah Surat</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-end mt-3">
                             <div class="col-4 d-flex flex-column">
                                 <button class="btn btn-primary back-page btn-light bg-danger-subtle text-danger border-danger" type="button"><i class="fa-solid fa-xmark"></i> &nbsp; Batal </button>
                             </div>
@@ -309,7 +324,7 @@
 
             // Add Surat Jalan
             $('body').on('click', '.btn-add-surat', function() {
-                $(this).hide();
+                // $(this).hide();
                 stopScanQr();
 
                 idStreamAll++;
@@ -320,8 +335,6 @@
                                             Surat Jalan
                                         </div>
                                         <div class="col-6 text-end">
-                                            <button class="btn btn-secondary btn-add-surat" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" type="button"><i class="fa-solid fa-plus"></i>&nbsp; Tambah Surat</button>
-                                            &nbsp;
                                             <button type="button" class="btn btn-danger bg-danger-subtle btn-remove-card-surat border-danger" data-id="${idStreamAll}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i class="text-danger fa-solid fa-trash"></i></button>
                                         </div>
                                     </div>
