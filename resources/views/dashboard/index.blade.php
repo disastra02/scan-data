@@ -49,7 +49,7 @@
                         <div class="card-body">
                             <h2 class="fw-bold mb-3"><i class="fa-solid fa-weight-scale"></i></h2>
                             <span>Berat</span>
-                            <h5 class="mb-0 fw-bold">{{ $totalBerat }} KG</h5>
+                            <h5 class="mb-0 fw-bold">{{ number_format($totalBerat / 1000, 2) }} TON</h5>
                         </div>
                     </div>
                 </div>

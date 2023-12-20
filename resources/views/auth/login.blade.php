@@ -50,7 +50,7 @@
                                 </div>
                             </div>
     
-                            <div class="row mb-3">
+                            <div class="row mb-4">
                                 <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
     
                                 <div class="col-md-6">
@@ -64,7 +64,7 @@
                                 </div>
                             </div>
     
-                            <div class="row mb-4">
+                            {{-- <div class="row mb-4">
                                 <div class="col-md-6 offset-md-4">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
@@ -74,7 +74,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
     
                             <div class="row mb-0">
                                 <div class="col-md-12">
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
     
-                            <div class="row mb-3">
+                            <div class="row mb-4">
                                 <label for="password" class="col-md-12 col-form-label text-md-start">{{ __('Password') }}</label>
     
                                 <div class="col-md-12">
@@ -141,7 +141,7 @@
                                 </div>
                             </div>
     
-                            <div class="row mb-4">
+                            {{-- <div class="row mb-4">
                                 <div class="col-md-12">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
@@ -151,7 +151,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
     
                             <div class="row mb-0">
                                 <div class="col-md-12">

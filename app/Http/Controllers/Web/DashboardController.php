@@ -34,7 +34,7 @@ class DashboardController extends Controller
 
         for($jumlahTanggal; $jumlahTanggal >= 0; $jumlahTanggal--) {
             $day = date('Y-m-d', strtotime('-'.$jumlahTanggal.' days'));
-            $total = Transport::whereDate('created_at', $day)->count();
+            $total = Transport::whereNot('created_by', $data['user']->id)->whereDate('created_at', $day)->count();
 
             array_push($data['tanggal'], $day);
             array_push($data['jumlah'], $total);

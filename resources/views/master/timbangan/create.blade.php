@@ -236,6 +236,9 @@
                                         // scannable, rest shaded.
                         },
                         resultQr => {
+                            var audio = new Audio(`{{ asset('beeptest.mp3') }}`);
+                            audio.play();
+                            
                             let kodeBarangId = resultQr ? resultQr.substr(0, 7) : 0;
                             let beratBarangId = resultQr ? resultQr.substr(7, 4) / 10 : 0;
                             let barang = dataBarang[kodeBarangId];
