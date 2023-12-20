@@ -26,79 +26,80 @@
                 <h3 class="fw-bold mb-0">Detail Timbangan</h3>
                 <span class="text-black-50">Lorem ipsum dolor</span>
                 <hr>
-                @forelse ($suratJalan as $item)
-                    <div class="row justify-content-center div-surat">
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h3 class="fw-bold mb-0 text-center">Surat Jalan</h3>
-                                    <p class="text-center text-black-50 mb-4">Nomor : {{ $item->no_surat }}</p>
+            </div>
+            
+            @forelse ($suratJalan as $item)
+                <div class="row justify-content-center div-surat">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="fw-bold mb-0 text-center">Surat Jalan</h3>
+                                <p class="text-center text-black-50 mb-4">Nomor : {{ $item->no_surat }}</p>
 
-                                    <table class="table table-borderless table-sm align-middle">
-                                        <tr>
-                                            <td class="fw-bold ps-0" width="25%">Nomor Kendaraan</td>
-                                            <td>: <span class="text-black-50 mb-0">{{ $transport->no_kendaraan }}</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="fw-bold ps-0" width="25%">Tanggal</td>
-                                            <td>: <span class="text-black-50 mb-0">{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}</span></td>
-                                        </tr>
-                                    </table>
+                                <table class="table table-borderless table-sm align-middle">
+                                    <tr>
+                                        <td class="fw-bold ps-0" width="25%">Nomor Kendaraan</td>
+                                        <td>: <span class="text-black-50 mb-0">{{ $transport->no_kendaraan }}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold ps-0" width="25%">Tanggal</td>
+                                        <td>: <span class="text-black-50 mb-0">{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}</span></td>
+                                    </tr>
+                                </table>
 
-                                    @if ($item->timbangans)
-                                        <table class="table table-bordered align-middle mb-0">
-                                            <thead>
+                                @if ($item->timbangans)
+                                    <table class="table table-bordered align-middle mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-start" width="5%">No</th>
+                                                <th class="text-start" width="60%">Barang</th>
+                                                <th class="text-start" width="35%">Berat</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($item->timbangans as $data)
                                                 <tr>
-                                                    <th class="text-start" width="5%">No</th>
-                                                    <th class="text-start" width="60%">Barang</th>
-                                                    <th class="text-start" width="35%">Berat</th>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $data->name }}</td>
+                                                    <td>{{ $data->berat_barang }} KG</td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse ($item->timbangans as $data)
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $data->name }}</td>
-                                                        <td>{{ $data->berat_barang }} KG</td>
-                                                    </tr>
 
-                                                    @if ($loop->last)
-                                                        <tr>
-                                                            <td colspan="2" class="fw-bold">Total Berat</td>
-                                                            <td class="fw-bold">{{ getJumlahBeratLetter($item->id) }} KG</td>
-                                                        </tr>
-                                                    @endif
-                                                @empty
+                                                @if ($loop->last)
                                                     <tr>
-                                                        <td colspan="3" class="text-center">Tidak ada data</td>
+                                                        <td colspan="2" class="fw-bold">Total Berat</td>
+                                                        <td class="fw-bold">{{ getJumlahBeratLetter($item->id) }} KG</td>
                                                     </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
-                                    @else
-                                        <div class="w-100 text-center">
-                                            <div class="alert alert-danger" role="alert">
-                                                Tidak ada data.
-                                            </div>
+                                                @endif
+                                            @empty
+                                                <tr>
+                                                    <td colspan="3" class="text-center">Tidak ada data</td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <div class="w-100 text-center">
+                                        <div class="alert alert-danger" role="alert">
+                                            Tidak ada data.
                                         </div>
-                                    @endif
-                                </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
-                @empty
-                    <div class="w-100 text-center">
-                        <div class="alert alert-danger" role="alert">
-                            Tidak ada data.
-                        </div>
+                </div>
+            @empty
+                <div class="w-100 text-center">
+                    <div class="alert alert-danger" role="alert">
+                        Tidak ada data.
                     </div>
-                @endforelse
+                </div>
+            @endforelse
 
-                <hr>
-                <div class="row justify-content-end">
-                    <div class="col-md-2 d-flex flex-column">
-                        <a class="btn btn-primary btn-light bg-danger-subtle text-danger border-danger" href="{{ route('w-dashboard.index') }}"><i class="fa-solid fa-arrow-left"></i> &nbsp; Kembali </a>
-                    </div>
+            <hr>
+            <div class="row justify-content-end">
+                <div class="col-md-2 d-flex flex-column">
+                    <a class="btn btn-primary btn-light bg-danger-subtle text-danger border-danger" href="{{ route('w-dashboard.index') }}"><i class="fa-solid fa-arrow-left"></i> &nbsp; Kembali </a>
                 </div>
             </div>
         </div>

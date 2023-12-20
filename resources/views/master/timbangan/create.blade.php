@@ -57,7 +57,7 @@
                                             <table class="table align-middle mb-0">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-start" width="55%">Kode Barang</th>
+                                                        <th class="text-start" width="55%">Barang</th>
                                                         <th class="text-start" width="35%">Berat</th>
                                                         <th class="text-center" width="10%">Aksi</th>
                                                     </tr>
@@ -341,7 +341,7 @@
                                             <table class="table align-middle">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-start" width="55%">Kode Barang</th>
+                                                        <th class="text-start" width="55%">Barang</th>
                                                         <th class="text-start" width="35%">Berat</th>
                                                         <th class="text-center" width="10%">Aksi</th>
                                                     </tr>
